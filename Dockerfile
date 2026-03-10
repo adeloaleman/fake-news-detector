@@ -9,8 +9,11 @@ RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /
     sed -i '/stretch-updates/d' /etc/apt/sources.list && \
     echo 'deb http://archive.debian.org/debian stretch-backports main' >> /etc/apt/sources.list
 
-# System libs for R packages (imager, tm, etc.); g++-7 from backports for C++17 (ndjson, qpdf need <string_view>)
-RUN apt-get update && apt-get install -y --no-install-recommends -t stretch-backports g++-7 && \
+# Allow apt to use archived repos (expired Release/Valid-Until)
+RUN echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-valid-until
+
+# System libs for R packages (imager, tm, etc.); gcc-7/g++-7 from backports for C++17 (ndjson, qpdf need <string_view>)
+RUN apt-get update && apt-get install -y --no-install-recommends -t stretch-backports gcc-7 g++-7 && \
     apt-get install -y --no-install-recommends \
     build-essential \
     gfortran \
@@ -26,7 +29,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends -t stretch-back
     libjpeg-dev \
     libmagick++-dev \
     libfftw3-dev \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && g++-7 --version
 
 # Allow packages that need C++17 (ndjson, qpdf) to compile; g++-7 has <string_view>; -fPIC for shared libs
 RUN echo 'CXX17 = g++-7 -std=c++17 -fPIC' >> /usr/local/lib/R/etc/Makeconf
