@@ -6,6 +6,7 @@ To avoid installing an older R (and all its packages) directly on the new Ubuntu
 2. On the **new server**: install Docker only (no R, no Shiny Server):
   ```bash
    sudo apt update && sudo apt install -y docker.io
+   docker --version
    sudo systemctl enable docker && sudo systemctl start docker
   ```
 3. Put the app on the new server. Use the **Dockerfile** in this repo to deploy the app
@@ -20,7 +21,8 @@ To avoid installing an older R (and all its packages) directly on the new Ubuntu
   curl -s -o /dev/null -w "%{http_code}" http://localhost:3838
   ```
 
-<br />
+  
+
 
 #### Useful Docker commands
 
@@ -45,7 +47,8 @@ docker build -t fake-news-detector-image .
 docker run -d -p 3838:3838 --name fake-news-detector-container fake-news-detector-image
 ```
 
-<br /> 
+  
+
 
 ### Nginx conf.
 

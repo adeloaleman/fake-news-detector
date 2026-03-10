@@ -1,6 +1,7 @@
 # Don't put these inside the image
 .git
 .Rhistory
+.RData
 DEPLOY.md
 Dockerfile
 .dockerignore
