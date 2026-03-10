@@ -66,7 +66,7 @@ RUN ARCH='http://archive.debian.org/debian/pool/main' && \
       "$G7/libstdc++-7-dev_7.4.0-6_amd64.deb" \
       "$G7/g++-7_7.4.0-6_amd64.deb" && \
     dpkg --force-depends -r binutils || true && \
-    dpkg -i libmpc3_1.1.0-1_amd64.deb \
+    dpkg -i --force-depends libmpc3_1.1.0-1_amd64.deb \
             libisl19_0.20-2_amd64.deb libmpfr6_4.0.2-1_amd64.deb \
             gcc-8-base_8.3.0-6_amd64.deb \
             libgcc1_8.3.0-6_amd64.deb libgomp1_8.3.0-6_amd64.deb \
@@ -80,7 +80,7 @@ RUN ARCH='http://archive.debian.org/debian/pool/main' && \
             libubsan0_7.4.0-6_amd64.deb \
             gcc-7-base_7.4.0-6_amd64.deb cpp-7_7.4.0-6_amd64.deb \
             libgcc-7-dev_7.4.0-6_amd64.deb gcc-7_7.4.0-6_amd64.deb \
-            libstdc++-7-dev_7.4.0-6_amd64.deb g++-7_7.4.0-6_amd64.deb && \
+            libstdc++-7-dev_7.4.0-6_amd64.deb g++-7_7.4.0-6_amd64.deb || true && \
     ( dpkg --configure -a --force-depends || true ) && \
     rm -f /tmp/*.deb && \
     g++-7 --version
