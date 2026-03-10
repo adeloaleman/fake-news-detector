@@ -42,12 +42,12 @@ RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" &
     R -e "remotes::install_version('curl',         version = '3.2',   repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('xml2',         version = '1.2.2',  repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('irlba',        version = '2.3.2',  repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('purrr',        version = '0.2.5',  repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('igraph',       version = '1.2.1',   repos = 'https://cloud.r-project.org/')" && \
-    R -e "install.packages(c('rjson','slam','BH','stringr'), repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('pillar',       version = '1.4.2',   repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('tibble',       version = '2.1.3',  repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('NLP',          version = '0.2-0',   repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('tibble',      version = '2.1.3',  repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('purrr',       version = '0.2.5',  repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('igraph',      version = '1.2.1',   repos = 'https://cloud.r-project.org/')" && \
+    R -e "install.packages(c('rjson','slam','BH','stringr'), repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('NLP',         version = '0.2-0',   repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('hms',          version = '0.4.2',  repos = 'https://cloud.r-project.org/')" && \
     R -e "install.packages(c('httr','clipr'), repos = 'https://cloud.r-project.org/')"
 
