@@ -33,10 +33,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install gcc-7/g++-7 from archive (C++17/string_view for ndjson, qpdf). Do NOT install Buster binutils:
 # their ld requires glibc 2.27 and breaks linking on Stretch. Install gcc-7 with --force-depends, then
-# reinstall Stretch binutils so /usr/bin/ld is the Stretch version (glibc 2.24).
+# install Stretch binutils via dpkg --force-depends so /usr/bin/ld is the Stretch version (glibc 2.24).
 RUN ARCH='http://archive.debian.org/debian/pool/main' && \
     G7="$ARCH/g/gcc-7" && G8="$ARCH/g/gcc-8" && ISL="$ARCH/i/isl" && MPFR="$ARCH/m/mpfr4" && \
-    MPC="$ARCH/m/mpclib3" && \
+    MPC="$ARCH/m/mpclib3" && BIN_STRETCH="$ARCH/b/binutils" && \
     cd /tmp && \
     wget -q \
       "$MPC/libmpc3_1.1.0-1_amd64.deb" \
@@ -62,6 +62,8 @@ RUN ARCH='http://archive.debian.org/debian/pool/main' && \
       "$G7/gcc-7_7.4.0-6_amd64.deb" \
       "$G7/libstdc++-7-dev_7.4.0-6_amd64.deb" \
       "$G7/g++-7_7.4.0-6_amd64.deb" && \
+    wget -q \
+      "$BIN_STRETCH/binutils_2.28-5_amd64.deb" && \
     dpkg --force-depends -r binutils || true && \
     dpkg -i --force-depends libmpc3_1.1.0-1_amd64.deb \
             libisl19_0.20-2_amd64.deb libmpfr6_4.0.2-1_amd64.deb \
@@ -77,7 +79,7 @@ RUN ARCH='http://archive.debian.org/debian/pool/main' && \
             libgcc-7-dev_7.4.0-6_amd64.deb gcc-7_7.4.0-6_amd64.deb \
             libstdc++-7-dev_7.4.0-6_amd64.deb g++-7_7.4.0-6_amd64.deb || true && \
     ( dpkg --configure -a --force-depends || true ) && \
-    apt-get update && apt-get install -y --reinstall binutils && rm -rf /var/lib/apt/lists/* && \
+    dpkg -i --force-depends binutils_2.28-5_amd64.deb && \
     rm -f /tmp/*.deb && \
     g++-7 --version
 
