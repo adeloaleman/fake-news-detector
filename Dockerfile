@@ -31,11 +31,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libfftw3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install gcc-7/g++-7 and all deps from archive (C++17/string_view for ndjson, qpdf)
-# Order: remove old binutils so new one can install; libmpc3 1.1.0, libisl19, libmpfr6; gcc-8-base + runtime libs; binutils 2.31; gcc-7
+# Install gcc-7/g++-7 from archive (C++17/string_view for ndjson, qpdf). Do NOT install Buster binutils:
+# their ld requires glibc 2.27 and breaks linking on Stretch. Install gcc-7 with --force-depends, then
+# reinstall Stretch binutils so /usr/bin/ld is the Stretch version (glibc 2.24).
 RUN ARCH='http://archive.debian.org/debian/pool/main' && \
     G7="$ARCH/g/gcc-7" && G8="$ARCH/g/gcc-8" && ISL="$ARCH/i/isl" && MPFR="$ARCH/m/mpfr4" && \
-    MPC="$ARCH/m/mpclib3" && BIN="$ARCH/b/binutils" && \
+    MPC="$ARCH/m/mpclib3" && \
     cd /tmp && \
     wget -q \
       "$MPC/libmpc3_1.1.0-1_amd64.deb" \
@@ -52,10 +53,6 @@ RUN ARCH='http://archive.debian.org/debian/pool/main' && \
       "$G8/libmpx2_8.3.0-6_amd64.deb" \
       "$G8/libquadmath0_8.3.0-6_amd64.deb" \
       "$G8/libtsan0_8.3.0-6_amd64.deb" \
-      "$BIN/libbinutils_2.31.1-16_amd64.deb" \
-      "$BIN/binutils-common_2.31.1-16_amd64.deb" \
-      "$BIN/binutils-x86-64-linux-gnu_2.31.1-16_amd64.deb" \
-      "$BIN/binutils_2.31.1-16_amd64.deb" \
       "$G7/libasan4_7.4.0-6_amd64.deb" \
       "$G7/libcilkrts5_7.4.0-6_amd64.deb" \
       "$G7/libubsan0_7.4.0-6_amd64.deb" \
@@ -74,14 +71,13 @@ RUN ARCH='http://archive.debian.org/debian/pool/main' && \
             libstdc++6_8.3.0-6_amd64.deb libcc1-0_8.3.0-6_amd64.deb \
             liblsan0_8.3.0-6_amd64.deb libmpx2_8.3.0-6_amd64.deb \
             libquadmath0_8.3.0-6_amd64.deb libtsan0_8.3.0-6_amd64.deb \
-            binutils-common_2.31.1-16_amd64.deb libbinutils_2.31.1-16_amd64.deb \
-            binutils-x86-64-linux-gnu_2.31.1-16_amd64.deb binutils_2.31.1-16_amd64.deb \
             libasan4_7.4.0-6_amd64.deb libcilkrts5_7.4.0-6_amd64.deb \
             libubsan0_7.4.0-6_amd64.deb \
             gcc-7-base_7.4.0-6_amd64.deb cpp-7_7.4.0-6_amd64.deb \
             libgcc-7-dev_7.4.0-6_amd64.deb gcc-7_7.4.0-6_amd64.deb \
             libstdc++-7-dev_7.4.0-6_amd64.deb g++-7_7.4.0-6_amd64.deb || true && \
     ( dpkg --configure -a --force-depends || true ) && \
+    apt-get update && apt-get install -y --reinstall binutils && rm -rf /var/lib/apt/lists/* && \
     rm -f /tmp/*.deb && \
     g++-7 --version
 
