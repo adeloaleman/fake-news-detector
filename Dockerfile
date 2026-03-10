@@ -33,8 +33,7 @@ RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" &
     R -e "remotes::install_version('R6',       version = '2.4.0',  repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('rlang',    version = '0.3.1',  repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('glue',      version = '1.3.1',  repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('vctrs',     version = '0.2.0',   repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('lifecycle', version = '0.1.0',  repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('vctrs',     version = '0.1.0',   repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('later',    version = '1.0.0',   repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('promises', version = '1.1.0',  repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('curl',     version = '3.2',   repos = 'https://cloud.r-project.org/')" && \
