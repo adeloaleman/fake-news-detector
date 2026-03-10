@@ -31,17 +31,46 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libfftw3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install gcc-7/g++-7 from archive pool (C++17/string_view for ndjson, qpdf); stretch-backports not usable via apt
-RUN BASE='http://archive.debian.org/debian/pool/main/g/gcc-7' && \
+# Newer binutils required by gcc-7 (Stretch has 2.28)
+RUN apt-get update && apt-get install -y -t stretch-backports --no-install-recommends binutils \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install gcc-7/g++-7 and all deps from archive (C++17/string_view for ndjson, qpdf)
+# Dependencies: libisl19, libmpfr6; gcc-8 runtime libs (satisfy >= 7.4.0); then gcc-7 packages
+RUN ARCH='http://archive.debian.org/debian/pool/main' && \
+    G7="$ARCH/g/gcc-7" && G8="$ARCH/g/gcc-8" && ISL="$ARCH/i/isl" && MPFR="$ARCH/m/mpfr4" && \
     cd /tmp && \
     wget -q \
-      "$BASE/gcc-7-base_7.4.0-6_amd64.deb" \
-      "$BASE/cpp-7_7.4.0-6_amd64.deb" \
-      "$BASE/libgcc-7-dev_7.4.0-6_amd64.deb" \
-      "$BASE/gcc-7_7.4.0-6_amd64.deb" \
-      "$BASE/libstdc++-7-dev_7.4.0-6_amd64.deb" \
-      "$BASE/g++-7_7.4.0-6_amd64.deb" && \
-    dpkg -i gcc-7-base_7.4.0-6_amd64.deb cpp-7_7.4.0-6_amd64.deb \
+      "$ISL/libisl19_0.20-2_amd64.deb" \
+      "$MPFR/libmpfr6_4.0.2-1_amd64.deb" \
+      "$G8/libgcc1_8.3.0-6_amd64.deb" \
+      "$G8/libgomp1_8.3.0-6_amd64.deb" \
+      "$G8/libitm1_8.3.0-6_amd64.deb" \
+      "$G8/libatomic1_8.3.0-6_amd64.deb" \
+      "$G8/libstdc++6_8.3.0-6_amd64.deb" \
+      "$G8/libcc1-0_8.3.0-6_amd64.deb" \
+      "$G8/liblsan0_8.3.0-6_amd64.deb" \
+      "$G8/libmpx2_8.3.0-6_amd64.deb" \
+      "$G8/libquadmath0_8.3.0-6_amd64.deb" \
+      "$G8/libtsan0_8.3.0-6_amd64.deb" \
+      "$G7/libasan4_7.4.0-6_amd64.deb" \
+      "$G7/libcilkrts5_7.4.0-6_amd64.deb" \
+      "$G7/libubsan0_7.4.0-6_amd64.deb" \
+      "$G7/gcc-7-base_7.4.0-6_amd64.deb" \
+      "$G7/cpp-7_7.4.0-6_amd64.deb" \
+      "$G7/libgcc-7-dev_7.4.0-6_amd64.deb" \
+      "$G7/gcc-7_7.4.0-6_amd64.deb" \
+      "$G7/libstdc++-7-dev_7.4.0-6_amd64.deb" \
+      "$G7/g++-7_7.4.0-6_amd64.deb" && \
+    dpkg -i libisl19_0.20-2_amd64.deb libmpfr6_4.0.2-1_amd64.deb \
+            libgcc1_8.3.0-6_amd64.deb libgomp1_8.3.0-6_amd64.deb \
+            libitm1_8.3.0-6_amd64.deb libatomic1_8.3.0-6_amd64.deb \
+            libstdc++6_8.3.0-6_amd64.deb libcc1-0_8.3.0-6_amd64.deb \
+            liblsan0_8.3.0-6_amd64.deb libmpx2_8.3.0-6_amd64.deb \
+            libquadmath0_8.3.0-6_amd64.deb libtsan0_8.3.0-6_amd64.deb \
+            libasan4_7.4.0-6_amd64.deb libcilkrts5_7.4.0-6_amd64.deb \
+            libubsan0_7.4.0-6_amd64.deb \
+            gcc-7-base_7.4.0-6_amd64.deb cpp-7_7.4.0-6_amd64.deb \
             libgcc-7-dev_7.4.0-6_amd64.deb gcc-7_7.4.0-6_amd64.deb \
             libstdc++-7-dev_7.4.0-6_amd64.deb g++-7_7.4.0-6_amd64.deb && \
     rm -f /tmp/*.deb && \
