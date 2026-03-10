@@ -1,7 +1,7 @@
 # Use the same R version as your old server.
 # When you run docker build: Docker downloads that image from Docker Hub.
 # That image is a snapshot that already contains R and the base system.
-FROM rocker/r-ver:3.4.4
+FROM rocker/r-ver:3.4.4 AS deps
 
 # Use Debian archive (Stretch is EOL and no longer on main mirrors)
 RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
@@ -12,9 +12,8 @@ RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /
 # Allow apt to use archived repos (expired Release/Valid-Until)
 RUN echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-valid-until
 
-# System libs for R packages (imager, tm, etc.); gcc-7/g++-7 from backports for C++17 (ndjson, qpdf need <string_view>)
-RUN apt-get update && apt-get install -y --no-install-recommends -t stretch-backports gcc-7 g++-7 && \
-    apt-get install -y --no-install-recommends \
+# System libs for R packages (imager, tm, etc.). Use default g++ for C++17 (ndjson, qpdf).
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     gfortran \
     libcurl4-openssl-dev \
@@ -30,10 +29,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends -t stretch-back
     libmagick++-dev \
     libfftw3-dev \
     && rm -rf /var/lib/apt/lists/* \
-    && g++-7 --version
+    && g++ --version
 
-# Allow packages that need C++17 (ndjson, qpdf) to compile; g++-7 has <string_view>; -fPIC for shared libs
-RUN echo 'CXX17 = g++-7 -std=c++17 -fPIC' >> /usr/local/lib/R/etc/Makeconf
+# Allow packages that need C++17 (ndjson, qpdf) to compile; use default g++ with -std=c++17
+RUN echo 'CXX17 = g++ -std=c++17 -fPIC' >> /usr/local/lib/R/etc/Makeconf
 
 ## Install the exact package versions from the old server
 ## Step 1: Base deps (R 3.4–compatible) so CRAN does not pull newer incompatible versions
@@ -80,6 +79,9 @@ RUN R -e "remotes::install_version('SparseM',      version = '1.77',    repos = 
     R -e "remotes::install_version('maxent',      version = '1.3.3.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('glmnet',       version = '2.0-16',  repos = 'https://cloud.r-project.org/')" && \
     R -e "install.packages(c('e1071','tau'), repos = 'https://cloud.r-project.org/')"
+
+# --- App stage: only re-runs when you change app code or local R packages ---
+FROM deps
 
 # Creating a working directory for the app
 WORKDIR /app
