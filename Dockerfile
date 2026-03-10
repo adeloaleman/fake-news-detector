@@ -6,10 +6,12 @@ FROM rocker/r-ver:3.4.4
 # Use Debian archive (Stretch is EOL and no longer on main mirrors)
 RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
     sed -i 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' /etc/apt/sources.list && \
-    sed -i '/stretch-updates/d' /etc/apt/sources.list
+    sed -i '/stretch-updates/d' /etc/apt/sources.list && \
+    echo 'deb http://archive.debian.org/debian stretch-backports main' >> /etc/apt/sources.list
 
-# System libs for R packages (imager, tm, etc.)
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# System libs for R packages (imager, tm, etc.); g++-7 from backports for C++17 (ndjson, qpdf need <string_view>)
+RUN apt-get update && apt-get install -y --no-install-recommends -t stretch-backports g++-7 && \
+    apt-get install -y --no-install-recommends \
     build-essential \
     gfortran \
     libcurl4-openssl-dev \
@@ -26,8 +28,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libfftw3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Allow packages that need C++17 (ndjson, qpdf) to compile
-RUN echo 'CXX17 = g++ -std=c++17' >> /usr/local/lib/R/etc/Makeconf
+# Allow packages that need C++17 (ndjson, qpdf) to compile; g++-7 has <string_view>; -fPIC for shared libs
+RUN echo 'CXX17 = g++-7 -std=c++17 -fPIC' >> /usr/local/lib/R/etc/Makeconf
 
 ## Install the exact package versions from the old server
 ## Step 1: Base deps (R 3.4–compatible) so CRAN does not pull newer incompatible versions
@@ -68,10 +70,10 @@ RUN R -e "remotes::install_version('httpuv',       version = '1.5.2',   repos = 
 RUN R -e "remotes::install_version('SparseM',      version = '1.77',    repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('randomForest', version = '4.6-12', repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('tree',         version = '1.0-37',  repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('prodlim',      version = '2018.04.18', repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('ipred',        version = '0.9-9',   repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('caTools',      version = '1.17.1.1', repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('maxent',       version = '1.3.3.1', repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('prodlim',     version = '2017.04.12', repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('ipred',       version = '0.9-9',   repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('caTools',     version = '1.17.1.1', repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('maxent',      version = '1.3.3.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('glmnet',       version = '2.0-16',  repos = 'https://cloud.r-project.org/')" && \
     R -e "install.packages(c('e1071','tau'), repos = 'https://cloud.r-project.org/')"
 
