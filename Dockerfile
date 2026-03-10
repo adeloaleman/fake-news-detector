@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install gcc-7/g++-7 and all deps from archive (C++17/string_view for ndjson, qpdf)
-# Order: libmpc3 1.1.0 (so libmpfr6 does not break libmpc3); libisl19, libmpfr6; gcc-8-base + runtime libs; binutils 2.31; gcc-7
+# Order: remove old binutils so new one can install; libmpc3 1.1.0, libisl19, libmpfr6; gcc-8-base + runtime libs; binutils 2.31; gcc-7
 RUN ARCH='http://archive.debian.org/debian/pool/main' && \
     G7="$ARCH/g/gcc-7" && G8="$ARCH/g/gcc-8" && ISL="$ARCH/i/isl" && MPFR="$ARCH/m/mpfr4" && \
     MPC="$ARCH/m/mpclib3" && BIN="$ARCH/b/binutils" && \
@@ -65,6 +65,7 @@ RUN ARCH='http://archive.debian.org/debian/pool/main' && \
       "$G7/gcc-7_7.4.0-6_amd64.deb" \
       "$G7/libstdc++-7-dev_7.4.0-6_amd64.deb" \
       "$G7/g++-7_7.4.0-6_amd64.deb" && \
+    dpkg --force-depends -r binutils || true && \
     dpkg -i libmpc3_1.1.0-1_amd64.deb \
             libisl19_0.20-2_amd64.deb libmpfr6_4.0.2-1_amd64.deb \
             gcc-8-base_8.3.0-6_amd64.deb \
@@ -80,6 +81,7 @@ RUN ARCH='http://archive.debian.org/debian/pool/main' && \
             gcc-7-base_7.4.0-6_amd64.deb cpp-7_7.4.0-6_amd64.deb \
             libgcc-7-dev_7.4.0-6_amd64.deb gcc-7_7.4.0-6_amd64.deb \
             libstdc++-7-dev_7.4.0-6_amd64.deb g++-7_7.4.0-6_amd64.deb && \
+    ( dpkg --configure -a --force-depends || true ) && \
     rm -f /tmp/*.deb && \
     g++-7 --version
 
