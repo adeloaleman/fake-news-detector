@@ -1,0 +1,6 @@
+# Don't put these inside the image
+.git
+.Rhistory
+DEPLOY.md
+Dockerfile
+.dockerignore
