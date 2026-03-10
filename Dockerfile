@@ -12,7 +12,7 @@ RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /
 # Allow apt to use archived repos (expired Release/Valid-Until)
 RUN echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-valid-until
 
-# System libs for R packages (imager, tm, etc.)
+# System libs for R packages (imager, tm, pdftools, readxl, etc.)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     gfortran \
@@ -29,6 +29,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libjpeg-dev \
     libmagick++-dev \
     libfftw3-dev \
+    libpoppler-cpp-dev \
+    libxls-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install gcc-7/g++-7 from archive (C++17/string_view for ndjson, qpdf). Do NOT install Buster binutils:
@@ -103,16 +105,23 @@ RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" &
     R -e "remotes::install_version('tibble',       version = '2.1.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('purrr',        version = '0.2.5',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('igraph',       version = '1.2.1',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "install.packages(c('rjson','slam','BH','stringr'), repos = 'https://cloud.r-project.org/')" && \
+    R -e "install.packages(c('slam','BH','stringr'), repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('rjson',        version = '0.2.20',     repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('NLP',          version = '0.2-0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('hms',          version = '0.4.2',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "install.packages(c('httr','clipr'), repos = 'https://cloud.r-project.org/')"
+    R -e "remotes::install_version('httr',        version = '1.4.2',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "install.packages(c('clipr'), repos = 'https://cloud.r-project.org/')"
 
 ## Step 2: App packages (order matters for dependencies)
-RUN R -e "remotes::install_version('httpuv',       version = '1.5.2',      repos = 'https://cloud.r-project.org/')" && \
+## Install readtext deps first so pdftools/streamR/readxl/readODS build with system libs and rjson/httr available
+RUN R -e "remotes::install_version('readxl',       version = '1.3.1',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('readODS',      version = '1.6.4',     repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('pdftools',      version = '3.7.0',     repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('streamR',       version = '0.4.5',     repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('readtext',     version = '0.75',       repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('httpuv',       version = '1.5.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('htmltools',    version = '0.4.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('shiny',        version = '1.4.0',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('readtext',     version = '0.75',       repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('xgboost',      version = '0.90.0.2',   repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('mlapi',        version = '0.1.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('text2vec',     version = '0.5.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
@@ -125,7 +134,7 @@ RUN R -e "remotes::install_version('httpuv',       version = '1.5.2',      repos
 RUN R -e "remotes::install_version('SparseM',      version = '1.77',       repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('randomForest', version = '4.6-12',     repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('tree',         version = '1.0-37',     repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('prodlim',      version = '2017.04.12', repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('prodlim',      version = '1.6.1',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('ipred',        version = '0.9-9',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('caTools',      version = '1.17.1.1',   repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('maxent',       version = '1.3.3.1',    repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
