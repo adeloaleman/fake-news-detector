@@ -97,7 +97,7 @@ RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" &
     R -e "remotes::install_version('vctrs',        version = '0.1.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('later',        version = '1.0.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('promises',     version = '1.1.0',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('curl',         version = '3.2',        repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('curl',         version = '2.8.1',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('xml2',         version = '1.2.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('irlba',        version = '2.3.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('pillar',       version = '1.4.2',      repos = 'https://cloud.r-project.org/')" && \
@@ -112,11 +112,14 @@ RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" &
     R -e "install.packages(c('clipr'), repos = 'https://cloud.r-project.org/')"
 
 ## Step 2: App packages (order matters for dependencies)
-## Install readtext deps first so pdftools/streamR/readxl/readODS build with system libs and rjson/httr available
-RUN R -e "remotes::install_version('readxl',       version = '1.3.1',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('readODS',      version = '1.6.4',     repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('pdftools',     version = '3.7.0',     repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('streamR',      version = '0.4.5',     repos = 'https://cloud.r-project.org/')" && \
+## Install tibble/pillar and readtext deps first so pdftools/streamR/readxl/readODS build with system libs and rjson/httr available,
+## and modern tidyverse packages do not try to pull lifecycle (not available on R 3.4.4).
+RUN R -e "remotes::install_version('pillar',       version = '1.4.2',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('tibble',       version = '2.1.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readxl',       version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readODS',      version = '1.6.4',     repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('pdftools',     version = '3.7.0',     repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('streamR',      version = '0.4.5',     repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('readtext',     version = '0.75',       repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('httpuv',       version = '1.5.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('htmltools',    version = '0.4.0',      repos = 'https://cloud.r-project.org/')" && \
@@ -151,7 +154,9 @@ COPY . /app
 
 # Install RTextTools and FakeNewsDetector from local R-packages.n0b4
 # (Project must contain R-packages.n0b4/RTextTools-modificado/RTextTools and R-packages.n0b4/FakeNewsDetector)
-RUN R CMD INSTALL /app/R-packages.n0b4/RTextTools-modificado/RTextTools && \
+# Ensure ipred is installed in this final image before installing RTextTools
+RUN R -e "remotes::install_version('ipred', version = '0.9-9', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R CMD INSTALL /app/R-packages.n0b4/RTextTools-modificado/RTextTools && \
     R CMD INSTALL /app/R-packages.n0b4/FakeNewsDetector && \
     rm -rf /app/R-packages.n0b4
 
