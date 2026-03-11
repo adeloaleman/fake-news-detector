@@ -1,5 +1,8 @@
 # https://stackoverflow.com/questions/38184396/shiny-server-user-usergroup
 
+# Ensure Docker container uses the image's R package library
+.libPaths(c("/usr/local/lib/R/site-library", .libPaths()))
+
 # This is the user-interface definition of a Shiny web application. You can
 # run the application by clicking 'Run App' above.
 #

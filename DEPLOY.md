@@ -56,8 +56,12 @@ To avoid installing an older R (and all its packages) directly on the new Ubuntu
 #### Useful Docker commands
 
 ```bash
+# List images
+docker image ls
+
 # Containers running
-docker ps
+docker ps -a  # All containers
+docker ps     # Running containers
 
 # Logs
 docker logs -f fake-news-detector-container

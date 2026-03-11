@@ -7,6 +7,7 @@
 #    http://shiny.rstudio.com/
 #
 
+.libPaths(c("/usr/local/lib/R/site-library", .libPaths()))
 library(shiny)
 
 # Define server logic required to draw a histogram
