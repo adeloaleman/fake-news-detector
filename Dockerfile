@@ -154,8 +154,9 @@ COPY . /app
 
 # Install RTextTools and FakeNewsDetector from local R-packages.n0b4
 # (Project must contain R-packages.n0b4/RTextTools-modificado/RTextTools and R-packages.n0b4/FakeNewsDetector)
-# Ensure ipred is installed in this final image before installing RTextTools
-RUN R -e "remotes::install_version('ipred', version = '0.9-9', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+# Install prodlim then ipred here so RTextTools finds them (avoids relying on deps cache)
+RUN R -e "remotes::install_version('prodlim', version = '1.6.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('ipred', version = '0.9-9', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R CMD INSTALL /app/R-packages.n0b4/RTextTools-modificado/RTextTools && \
     R CMD INSTALL /app/R-packages.n0b4/FakeNewsDetector && \
     rm -rf /app/R-packages.n0b4

@@ -19,8 +19,8 @@ To avoid installing an older R (and all its packages) directly on the new Ubuntu
 
 #### Faster builds (avoid 30‑minute rebuilds)
 
-- **Use cache by default.** Only run `docker build` (no `--no-cache`). Docker reuses layers; if you only change app code, only the last few steps run (~1–2 min).
-- **Use `--no-cache` only when** you changed the Dockerfile (apt, R version, or R package list). Then a full rebuild is needed.
+- **Use cache by default.** Only run `docker build` (no `--no-cache`). Docker reuses layers; if you only change app code or the final RUN (e.g. prodlim/ipred/RTextTools install), only the last few steps run (~1–2 min).
+- **Use `--no-cache` only when** you changed the Dockerfile’s dependency steps (apt, R version, or R package list in the `deps` stage). Then a full rebuild is needed.
 - **Validate deps first (optional).** To check system + R packages without building the app layer, build up to the `deps` stage. If this fails, fix and re-run; once it passes, a full build will use the cache and finish quickly:
   ```bash
   docker build --target deps -t fake-news-deps .
