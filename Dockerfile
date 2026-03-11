@@ -97,7 +97,7 @@ RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" &
     R -e "remotes::install_version('vctrs',        version = '0.1.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('later',        version = '1.0.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('promises',     version = '1.1.0',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('curl',         version = '2.8.1',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('curl',         version = '2.8.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('xml2',         version = '1.2.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('irlba',        version = '2.3.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('pillar',       version = '1.4.2',      repos = 'https://cloud.r-project.org/')" && \
@@ -116,6 +116,7 @@ RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" &
 ## and modern tidyverse packages do not try to pull lifecycle (not available on R 3.4.4).
 RUN R -e "remotes::install_version('pillar',       version = '1.4.2',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('tibble',       version = '2.1.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readr',        version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('readxl',       version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('readODS',      version = '1.6.4',     repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('pdftools',     version = '3.7.0',     repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
@@ -128,7 +129,6 @@ RUN R -e "remotes::install_version('pillar',       version = '1.4.2',      repos
     R -e "remotes::install_version('mlapi',        version = '0.1.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('text2vec',     version = '0.5.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('tm',           version = '0.7-7',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('readr',        version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('SnowballC',    version = '0.6.0',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('imager',       version = '0.42.1',     repos = 'https://cloud.r-project.org/', upgrade = 'never')"
 
