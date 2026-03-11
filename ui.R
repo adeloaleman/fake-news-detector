@@ -21,7 +21,7 @@ library(NLP)
 library(readr)
 library(imager)   # https://github.com/aoles/EBImage/issues/2    https://github.com/Bioconductor/bioc_docker/issues/26 
 
-library(RFakeNewsDetector)
+library(FakeNewsDetector)
 
 
 # Define UI for application that draws a histogram

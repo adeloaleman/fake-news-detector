@@ -12,7 +12,7 @@ library(readr)
 library(tools)       # No tiene que ser isntalado. It's a base pacakge
 library(SnowballC)
 library(RTextTools)
-library(RFakeNewsDetector)
+library(FakeNewsDetector)
 
 res<-modelSVM(data$text)
 
