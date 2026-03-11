@@ -100,7 +100,7 @@ RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" &
     R -e "remotes::install_version('curl',         version = '2.8.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('xml2',         version = '1.2.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('irlba',        version = '2.3.2',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('pillar',       version = '1.4.2',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('pillar',       version = '1.4.2',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('tibble',       version = '2.1.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('purrr',        version = '0.2.5',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('igraph',       version = '1.2.1',      repos = 'https://cloud.r-project.org/')" && \
@@ -117,11 +117,7 @@ RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" &
 RUN R -e "remotes::install_version('pillar',       version = '1.4.2',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('tibble',       version = '2.1.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('readr',        version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('readxl',       version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('readODS',      version = '1.6.4',     repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('pdftools',     version = '3.7.0',     repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('streamR',      version = '0.4.5',     repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('readtext',     version = '0.75',       repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readxl', version = '1.3.1', repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('readODS', version = '1.6.4', repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('pdftools', version = '3.7.0', repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('streamR', version = '0.4.5', repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('readtext', version = '0.75', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('httpuv',       version = '1.5.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('htmltools',    version = '0.4.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('shiny',        version = '1.4.0',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
