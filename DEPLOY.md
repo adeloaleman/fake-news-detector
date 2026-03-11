@@ -21,6 +21,17 @@ To avoid installing an older R (and all its packages) directly on the new Ubuntu
   ```
   This can take ~30 minutes because it installs all system and R dependencies.
 
+#### Test deps only (after changing R packages in the Dockerfile)
+
+To check that the R dependency stage builds and loads correctly **without** building the full image:
+
+```bash
+docker build --target deps -t fake-news-deps .
+docker run --rm fake-news-deps R -e "library(readxl); library(readtext); library(streamR); cat('Deps OK\n')"
+```
+
+If that succeeds, the full build should get past the dependency step.
+
 #### Option B: Fast build (when you only change app code or the app-stage install)
 
   Use this so you don’t wait 30 minutes every time you tweak the app or the final install step.
@@ -76,7 +87,8 @@ docker start fake-news-detector-container
 
 # Rebuild after changing app or Dockerfile (uses cache; only changed layers rebuild)
 docker build -t fake-news-detector-image .
-docker stop fake-news-detector-container 2>/dev/null; docker rm fake-news-detector-container 2>/dev/null
+docker stop fake-news-detector-container
+docker rm fake-news-detector-container
 docker run -d -p 3838:3838 --name fake-news-detector-container fake-news-detector-image
 ```
 

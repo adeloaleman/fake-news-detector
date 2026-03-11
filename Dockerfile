@@ -112,12 +112,19 @@ RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" &
     R -e "install.packages(c('clipr'), repos = 'https://cloud.r-project.org/')"
 
 ## Step 2: App packages (order matters for dependencies)
-## Install tibble/pillar and readtext deps first so pdftools/streamR/readxl/readODS build with system libs and rjson/httr available,
-## and modern tidyverse packages do not try to pull lifecycle (not available on R 3.4.4).
+## 2a) Install ALL known CRAN deps for readxl/readODS/pdftools/streamR/readtext first (avoids missing-dependency failures).
+##     readxl needs: progress, cellranger. streamR needs: RCurl, rjson(already), ndjson->data.table, bitops, base64enc. readtext needs: digest, stringi, etc.
+RUN R -e "install.packages(c('progress', 'cellranger', 'RCurl', 'data.table', 'bitops', 'base64enc', 'digest', 'stringi'), repos = 'https://cloud.r-project.org/')"
+
+## 2b) Tibble/readr then version-pinned readxl, readODS, pdftools, streamR, readtext (deps already present).
 RUN R -e "remotes::install_version('pillar',       version = '1.4.2',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('tibble',       version = '2.1.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('readr',        version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "install.packages('progress', repos = 'https://cloud.r-project.org/'); remotes::install_version('readxl', version = '1.3.1', repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('readODS', version = '1.6.4', repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('pdftools', version = '3.7.0', repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('streamR', version = '0.4.5', repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('readtext', version = '0.75', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readxl',       version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readODS',     version = '1.6.4',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('pdftools',     version = '3.7.0',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('streamR',     version = '0.4.5',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readtext',     version = '0.75',       repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('httpuv',       version = '1.5.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('htmltools',    version = '0.4.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('shiny',        version = '1.4.0',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
