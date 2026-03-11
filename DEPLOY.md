@@ -21,16 +21,36 @@ To avoid installing an older R (and all its packages) directly on the new Ubuntu
   ```
   This can take ~30 minutes because it installs all system and R dependencies.
 
-#### Test deps only (after changing R packages in the Dockerfile)
+#### Test readtext first (avoid 30‑min rebuilds when fixing readtext)
 
-To check that the R dependency stage builds and loads correctly **without** building the full image:
+Before running a full `docker build` (30+ min), **prove that readtext installs** using a small test image and a script you can edit and re-run **without rebuilding**:
+
+1. **One-time:** build the readtext-test image (~2 min):
+   ```bash
+   cd ~/fake-news-detector
+   docker build -f Dockerfile.readtext-test -t readtext-test .
+   ```
+
+2. **Every time you change the install sequence:** run the script (no rebuild; script is on your host, mounted into the container):
+   ```bash
+   docker run --rm -v "$(pwd):/app" -w /app readtext-test R -f scripts/install-readtext-test.R
+   ```
+   - If it fails, fix `scripts/install-readtext-test.R` (or add missing deps to the script), then run the same command again. No Docker build.
+   - If it prints `readtext OK` and exits 0, the same sequence in the main Dockerfile should work; then run the full build.
+
+3. **Only after the script succeeds:** run the full build:
+   ```bash
+   docker build -t fake-news-detector-image .
+   ```
+
+#### Test deps only (after changing R packages in the main Dockerfile)
+
+To check that the full deps stage builds and loads:
 
 ```bash
 docker build --target deps -t fake-news-deps .
 docker run --rm fake-news-deps R -e "library(readxl); library(readtext); library(streamR); cat('Deps OK\n')"
 ```
-
-If that succeeds, the full build should get past the dependency step.
 
 #### Option B: Fast build (when you only change app code or the app-stage install)
 
