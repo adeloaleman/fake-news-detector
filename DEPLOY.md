@@ -10,25 +10,40 @@ To avoid installing an older R (and all its packages) directly on the new Ubuntu
    sudo systemctl enable docker && sudo systemctl start docker
   ```
 3. Put the app on the new server. Use the **Dockerfile** in this repo to deploy the app
-4. From the app directory (where `Dockerfile` and `ui.R` are):
+4. From the app directory (where `Dockerfile` and `ui.R` are), use **one** of the two workflows below.
+
+#### Option A: Full build (when you change apt/R packages or first time)
+
   ```bash
   cd ~/fake-news-detector
   docker build -t fake-news-detector-image .
   docker run -d -p 3838:3838 --name fake-news-detector-container fake-news-detector-image
   ```
+  This can take ~30 minutes because it installs all system and R dependencies.
 
-#### Faster builds (avoid 30‑minute rebuilds)
+#### Option B: Fast build (when you only change app code or the app-stage install)
 
-- **Use cache by default.** Only run `docker build` (no `--no-cache`). Docker reuses layers; if you only change app code or the final RUN (e.g. prodlim/ipred/RTextTools install), only the last few steps run (~1–2 min).
-- **Use `--no-cache` only when** you changed the Dockerfile’s dependency steps (apt, R version, or R package list in the `deps` stage). Then a full rebuild is needed.
-- **Validate deps first (optional).** To check system + R packages without building the app layer, build up to the `deps` stage. If this fails, fix and re-run; once it passes, a full build will use the cache and finish quickly:
-  ```bash
-  docker build --target deps -t fake-news-deps .
-  ```
-  Then build the full image as usual:
-  ```bash
-  docker build -t fake-news-detector-image .
-  ```
+  Use this so you don’t wait 30 minutes every time you tweak the app or the final install step.
+
+  1. **Once** (or when you change apt / R packages in the main Dockerfile), build the dependency image:
+     ```bash
+     cd ~/fake-news-detector
+     docker build --target deps -t fake-news-deps .
+     ```
+  2. For normal iteration (app code or `Dockerfile.app` changes only), build the app image in ~1–2 minutes:
+     ```bash
+     docker build -f Dockerfile.app -t fake-news-detector-image .
+     docker run -d -p 3838:3838 --name fake-news-detector-container fake-news-detector-image
+     ```
+
+  Summary:
+  - **First time or after changing deps:** run step 1, then step 2.
+  - **Only app / RTextTools install changes:** run step 2 only.
+
+#### Why the full build often takes 30 min again
+
+- Changing **any line** in the main `Dockerfile` (including the app stage) can invalidate Docker’s cache depending on your Docker version and how the layers are stored. So a single edit may trigger a full rebuild.
+- Using **Option B** avoids that: the heavy work lives in the `fake-news-deps` image; `Dockerfile.app` only adds your app and the prodlim/ipred/RTextTools step, so that build stays short.
 
 5. Hit the app at `http://YOUR_SERVER_IP:3838` in a browser.
   ```bash

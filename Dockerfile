@@ -154,8 +154,10 @@ COPY . /app
 
 # Install RTextTools and FakeNewsDetector from local R-packages.n0b4
 # (Project must contain R-packages.n0b4/RTextTools-modificado/RTextTools and R-packages.n0b4/FakeNewsDetector)
-# Install prodlim then ipred here so RTextTools finds them (avoids relying on deps cache)
-RUN R -e "remotes::install_version('prodlim', version = '1.6.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+# Install prodlim then ipred here so RTextTools finds them (avoids relying on deps cache).
+# Install lava 1.6.6 first so prodlim does not pull lava 1.8.x (which needs progressr, not on R 3.4).
+RUN R -e "remotes::install_version('lava', version = '1.6.6', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('prodlim', version = '1.6.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('ipred', version = '0.9-9', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R CMD INSTALL /app/R-packages.n0b4/RTextTools-modificado/RTextTools && \
     R CMD INSTALL /app/R-packages.n0b4/FakeNewsDetector && \
