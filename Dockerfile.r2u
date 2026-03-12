@@ -65,7 +65,7 @@ COPY . /app
 # RTextTools dependencies: SparseM from CRAN/r2u; maxent is archived and broken on R 4.x (assigns to baseenv), patch and install
 RUN R -e "options(repos='https://cloud.r-project.org/'); install.packages('SparseM')" && \
     cd /tmp && \
-    wget -q https://cran.r-project.org/src/contrib/Archive/maxent/maxent_1.3.3.1.tar.gz && \
+    curl -sL -o maxent_1.3.3.1.tar.gz https://cran.r-project.org/src/contrib/Archive/maxent/maxent_1.3.3.1.tar.gz && \
     tar xzf maxent_1.3.3.1.tar.gz && \
     sed -i 's/baseenv()/asNamespace("maxent")/g' maxent/R/*.R && \
     R CMD INSTALL maxent && \
