@@ -62,8 +62,9 @@ FROM deps
 WORKDIR /app
 COPY . /app
 
-# RTextTools dependencies (not all in r2u; install from CRAN before local packages)
-RUN R -e "options(repos='https://cloud.r-project.org/'); install.packages(c('SparseM', 'maxent'))"
+# RTextTools dependencies: SparseM from CRAN/r2u; maxent is archived, install from archive
+RUN R -e "options(repos='https://cloud.r-project.org/'); install.packages('SparseM')" && \
+    R -e "remotes::install_version('maxent', version = '1.3.3.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')"
 
 # Install local packages (required; build must run from repo root that contains R-packages.n0b4).
 # If you still get "no package called FakeNewsDetector", sync this Dockerfile to the server and rebuild with: docker build --no-cache -f Dockerfile.r2u -t fake-news-detector:r2u .
