@@ -90,60 +90,70 @@ RUN echo 'CXX17 = g++-7 -std=c++17 -fPIC' >> /usr/local/lib/R/etc/Makeconf
 ## Install the exact package versions from the old server
 ## Step 1: Base deps (R 3.4–compatible) so CRAN does not pull newer incompatible versions
 RUN R -e "install.packages('remotes', repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('Rcpp',         version = '1.0.1',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('R6',           version = '2.4.0',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('rlang',        version = '0.3.1',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('Rcpp',         version = '1.0.3',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('R6',           version = '2.4.1',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('rlang',        version = '0.4.4',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('glue',         version = '1.3.1',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('vctrs',        version = '0.1.0',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('vctrs',        version = '0.2.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('later',        version = '1.0.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('promises',     version = '1.1.0',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('curl',         version = '2.8.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('curl',         version = '4.3',        repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('xml2',         version = '1.2.2',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('irlba',        version = '2.3.2',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('pillar',       version = '1.4.2',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('irlba',        version = '2.3.3',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('pillar',       version = '1.4.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('tibble',       version = '2.1.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('purrr',        version = '0.2.5',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('igraph',       version = '1.2.1',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "install.packages(c('slam','BH','stringr'), repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('purrr',        version = '0.3.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('igraph',       version = '1.2.4.2',    repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('slam',         version = '0.1-47',     repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('BH',           version = '1.72.0-3',   repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('stringr',      version = '1.4.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('rjson',        version = '0.2.20',     repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('NLP',          version = '0.2-0',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('hms',          version = '0.4.2',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('httr',        version = '1.4.2',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "install.packages(c('clipr'), repos = 'https://cloud.r-project.org/')"
+    R -e "remotes::install_version('hms',          version = '0.5.3',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('httr',         version = '1.4.1',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('clipr',        version = '0.7.0',      repos = 'https://cloud.r-project.org/')"
 
 ## Step 2: App packages (order matters for dependencies)
 ## 2a) Install ALL known CRAN deps for readxl/readODS/pdftools/streamR/readtext first (avoids missing-dependency failures).
 ##     readxl needs: progress, cellranger. streamR needs: RCurl, rjson(already), ndjson->data.table, bitops, base64enc. readtext needs: digest, stringi, etc.
-RUN R -e "install.packages(c('progress', 'cellranger', 'RCurl', 'data.table', 'bitops', 'base64enc', 'digest', 'stringi'), repos = 'https://cloud.r-project.org/')"
+RUN R -e "remotes::install_version('progress',    version = '1.2.2',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('cellranger',  version = '1.1.0',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('RCurl',       version = '1.98-1.1',   repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('data.table',  version = '1.12.8',     repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('bitops',      version = '1.0-6',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "install.packages('base64enc',           repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('digest',      version = '0.6.24',     repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('stringi',     version = '1.4.6',      repos = 'https://cloud.r-project.org/')"
 
 ## 2b) Tibble/readr then version-pinned readxl, readODS, pdftools, streamR, readtext (deps already present).
-RUN R -e "remotes::install_version('pillar',       version = '1.4.2',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+RUN R -e "remotes::install_version('pillar',       version = '1.4.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('tibble',       version = '2.1.3',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('readr',        version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('readODS',     version = '1.6.4',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('pdftools',     version = '3.7.0',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('streamR',     version = '0.4.5',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('readxl', version = '1.3.1', repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('readtext', version = '0.75', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readODS',      version = '1.6.7',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('pdftools',     version = '2.3',        repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('streamR',      version = '0.4.5',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readxl',       version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('readtext', version = '0.75', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('httpuv',       version = '1.5.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('htmltools',    version = '0.4.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('shiny',        version = '1.4.0',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('xgboost',      version = '0.90.0.2',   repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('mlapi',        version = '0.1.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('mlapi',        version = '0.1.0',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('text2vec',     version = '0.5.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('tm',           version = '0.7-7',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('SnowballC',    version = '0.6.0',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('imager',       version = '0.42.1',     repos = 'https://cloud.r-project.org/', upgrade = 'never')"
 
-## Step 3: RTextTools dependencies (R 3.4–compatible versions; SparseM 1.77 avoids diag generic issue)
-RUN R -e "remotes::install_version('SparseM',      version = '1.77',       repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('randomForest', version = '4.6-12',     repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('tree',         version = '1.0-37',     repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('prodlim',      version = '1.6.1',      repos = 'https://cloud.r-project.org/')" && \
+## Step 3: RTextTools dependencies (R 3.4–compatible versions; versions aligned with original server)
+RUN R -e "remotes::install_version('SparseM',      version = '1.78',       repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('randomForest', version = '4.6-14',     repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('tree',         version = '1.0-39',     repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('prodlim',      version = '2019.11.13', repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('ipred',        version = '0.9-9',      repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('caTools',      version = '1.17.1.1',   repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('caTools',      version = '1.17.1.4',   repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('maxent',       version = '1.3.3.1',    repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('glmnet',       version = '2.0-16',     repos = 'https://cloud.r-project.org/')" && \
-    R -e "install.packages(c('e1071','tau'), repos = 'https://cloud.r-project.org/')"
+    R -e "remotes::install_version('glmnet',       version = '2.0-18',     repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('e1071',        version = '1.7-3',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('tau',          version = '0.0-21',     repos = 'https://cloud.r-project.org/')"
 
 # --- App stage: only re-runs when you change app code or local R packages ---
 FROM deps
