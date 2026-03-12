@@ -62,6 +62,9 @@ FROM deps
 WORKDIR /app
 COPY . /app
 
+# RTextTools dependencies (not all in r2u; install from CRAN before local packages)
+RUN R -e "options(repos='https://cloud.r-project.org/'); install.packages(c('SparseM', 'maxent'))"
+
 # Install local packages (required; build must run from repo root that contains R-packages.n0b4).
 # If you still get "no package called FakeNewsDetector", sync this Dockerfile to the server and rebuild with: docker build --no-cache -f Dockerfile.r2u -t fake-news-detector:r2u .
 RUN R CMD INSTALL /app/R-packages.n0b4/RTextTools-modificado/RTextTools && \
