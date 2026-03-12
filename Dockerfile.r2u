@@ -62,14 +62,13 @@ FROM deps
 WORKDIR /app
 COPY . /app
 
-# Install local packages if present
-RUN if [ -d \"/app/R-packages.n0b4/RTextTools-modificado/RTextTools\" ]; then \
-      R CMD INSTALL /app/R-packages.n0b4/RTextTools-modificado/RTextTools ; \
-    fi && \
-    if [ -d \"/app/R-packages.n0b4/FakeNewsDetector\" ]; then \
-      R CMD INSTALL /app/R-packages.n0b4/FakeNewsDetector ; \
-    fi && \
-    rm -rf /app/R-packages.n0b4 || true
+# Install local packages (required; build must run from repo root that contains R-packages.n0b4).
+# If you still get "no package called FakeNewsDetector", sync this Dockerfile to the server and rebuild with: docker build --no-cache -f Dockerfile.r2u -t fake-news-detector:r2u .
+RUN R CMD INSTALL /app/R-packages.n0b4/RTextTools-modificado/RTextTools && \
+    R CMD INSTALL /app/R-packages.n0b4/FakeNewsDetector && \
+    rm -rf /app/R-packages.n0b4
+# Verify packages load (build fails here if install was skipped or broken)
+RUN R -e "library(RTextTools); library(FakeNewsDetector); cat('RTextTools + FakeNewsDetector OK\n')"
 
 RUN chmod -R a+rX /app && chmod -R a+w /app
 EXPOSE 3838

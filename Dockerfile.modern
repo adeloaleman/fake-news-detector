@@ -30,9 +30,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpoppler-cpp-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install CRAN packages (un-pinned; modern R should resolve cleanly)
+# All CRAN packages loaded by ui.R, server.R, xgboost.r, nbase.r, sv.r (tools is base R)
 RUN R -e "options(repos='https://cloud.r-project.org/'); install.packages('remotes')" && \
-    R -e "options(repos='https://cloud.r-project.org/'); install.packages(c('shiny','devtools','readtext','readxl','readr','readODS','pdftools','streamR','tm','SnowballC','imager','xgboost','mlapi','text2vec','randomForest','tree','prodlim','ipred','caTools','glmnet','e1071','tau'))"
+    R -e "options(repos='https://cloud.r-project.org/'); install.packages(c('shiny','devtools','readtext','readxl','readr','readODS','pdftools','streamR','tm','SnowballC','imager','xgboost','mlapi','text2vec','randomForest','tree','prodlim','ipred','caTools','glmnet','e1071','tau','NLP'))"
 
 # --- App stage ---
 FROM deps
@@ -48,7 +48,9 @@ RUN if [ -d "/app/R-packages.n0b4/RTextTools-modificado/RTextTools" ]; then \
     fi && \
     rm -rf /app/R-packages.n0b4 || true
 
-RUN chmod -R a+rX /app && chmod -R a+w /app
+RUN chmod -R a+rX /app && chmod -R a+w /app && chmod +x /app/scripts/docker-entrypoint.sh
 EXPOSE 3838
-CMD ["R", "-e", "shiny::runApp('/app', host='0.0.0.0', port=3838)"]
+# Entrypoint installs packages from extra-packages.txt (if any) then starts Shiny.
+# Add missing package names there and restart container (no rebuild).
+ENTRYPOINT ["/app/scripts/docker-entrypoint.sh"]
 

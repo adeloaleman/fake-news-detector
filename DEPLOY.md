@@ -14,6 +14,8 @@ docker run -d --rm -p 3838:3838 --name fake-news-detector fake-news-detector:mod
 
 Hit the app at `http://YOUR_SERVER_IP:3838`. To run in foreground (see R output in terminal), omit `-d`. Use `docker logs -f fake-news-detector` to view logs; `docker stop fake-news-detector` to stop.
 
+**Fix "no package called 'X'" without rebuilding:** Add `X` to `extra-packages.txt` (one name per line), then restart the container. The container installs those packages on startup, then runs the app. No image rebuild.
+
 #### Fastest builds: Ubuntu + r2u (binary CRAN packages)
 
 If you want to avoid compiling R packages from source, use the r2u-based Dockerfile. It installs most CRAN packages as **Ubuntu binaries** (much faster):
