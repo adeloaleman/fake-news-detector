@@ -1,5 +1,6 @@
 This is the R version and all packages version used in the original project
 
+Ubuntu 18.04.6 LTS
 2018 The R Foundation for Statistical 
 R version 3.4.4 (2018-03-15)
 Computing Platform: x86_64-pc-linux-gnu (64-bit)

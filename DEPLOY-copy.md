@@ -44,6 +44,15 @@ docker build -t fake-news-detector-image .
 docker stop fake-news-detector-container
 docker rm fake-news-detector-container
 docker run -d -p 3838:3838 --name fake-news-detector-container fake-news-detector-image
+
+# Delete all containers
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+
+# Delete all images
+docker rmi $(docker images -q)
+# One-shot prune (images, containers, volumes, networks). If you truly want to wipe almost everything Docker created on your machine:
+docker system prune -a --volumes
 ```
 
   
