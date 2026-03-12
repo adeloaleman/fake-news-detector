@@ -2,6 +2,18 @@
 
 To avoid installing an older R (and all its packages) directly on the new Ubuntu 24 server, run the app in a **Docker container** that uses the same R version as your old server. Only Docker is installed on the host; R and the app live inside the container.
 
+#### Recommended (if you're stuck on R 3.4 / archived Debian)
+
+Use the modern Dockerfile in this repo (newer R + supported Debian), so you avoid archived apt repos and most CRAN incompatibilities:
+
+```bash
+cd ~/fake-news-detector
+docker build -f Dockerfile.modern -t fake-news-detector:modern .
+docker run --rm -p 3838:3838 fake-news-detector:modern
+```
+
+Hit the app at `http://YOUR_SERVER_IP:3838`.
+
 1. On the **old server**: note R version and R-packages versions
 2. On the **new server**: install Docker only (no R, no Shiny Server):
   ```bash

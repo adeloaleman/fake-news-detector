@@ -1,0 +1,54 @@
+## Modern build (recommended): supported OS + newer R.
+## Goal: avoid Debian Stretch archive + old CRAN incompatibilities.
+##
+## Build:
+##   docker build -f Dockerfile.modern -t fake-news-detector:modern .
+## Run:
+##   docker run --rm -p 3838:3838 fake-news-detector:modern
+
+FROM rocker/r-ver:4.2.3 AS deps
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# System libs for common R packages used by this app and readtext stack
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gfortran \
+    pkg-config \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    libxml2-dev \
+    libfontconfig1-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
+    libmagick++-dev \
+    libfftw3-dev \
+    libpoppler-cpp-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install CRAN packages (un-pinned; modern R should resolve cleanly)
+RUN R -e "options(repos='https://cloud.r-project.org/'); install.packages('remotes')" && \
+    R -e "options(repos='https://cloud.r-project.org/'); install.packages(c('shiny','readtext','readxl','readr','readODS','pdftools','streamR','tm','SnowballC','imager','xgboost','mlapi','text2vec','randomForest','tree','prodlim','ipred','caTools','glmnet','e1071','tau'))"
+
+# --- App stage ---
+FROM deps
+WORKDIR /app
+COPY . /app
+
+# Install local packages if present, but don't fail if folder removed
+RUN if [ -d "/app/R-packages.n0b4/RTextTools-modificado/RTextTools" ]; then \
+      R CMD INSTALL /app/R-packages.n0b4/RTextTools-modificado/RTextTools ; \
+    fi && \
+    if [ -d "/app/R-packages.n0b4/FakeNewsDetector" ]; then \
+      R CMD INSTALL /app/R-packages.n0b4/FakeNewsDetector ; \
+    fi && \
+    rm -rf /app/R-packages.n0b4 || true
+
+RUN chmod -R a+rX /app && chmod -R a+w /app
+EXPOSE 3838
+CMD ["R", "-e", "shiny::runApp('/app', host='0.0.0.0', port=3838)"]
+
