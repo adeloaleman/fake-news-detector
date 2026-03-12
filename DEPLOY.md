@@ -9,10 +9,21 @@ Use the modern Dockerfile in this repo (newer R + supported Debian), so you avoi
 ```bash
 cd ~/fake-news-detector
 docker build -f Dockerfile.modern -t fake-news-detector:modern .
-docker run --rm -p 3838:3838 fake-news-detector:modern
+docker run -d --rm -p 3838:3838 --name fake-news-detector fake-news-detector:modern
 ```
 
-Hit the app at `http://YOUR_SERVER_IP:3838`.
+Hit the app at `http://YOUR_SERVER_IP:3838`. To run in foreground (see R output in terminal), omit `-d`. Use `docker logs -f fake-news-detector` to view logs; `docker stop fake-news-detector` to stop.
+
+#### Fastest builds: Ubuntu + r2u (binary CRAN packages)
+
+If you want to avoid compiling R packages from source, use the r2u-based Dockerfile. It installs most CRAN packages as **Ubuntu binaries** (much faster):
+
+```bash
+cd ~/fake-news-detector
+docker build -f Dockerfile.r2u -t fake-news-detector:r2u .
+docker run -d --rm -p 3838:3838 --name fake-news-detector fake-news-detector:r2u
+```
+To run in foreground, omit `-d`. Use `docker logs -f fake-news-detector` and `docker stop fake-news-detector` as needed.
 
 1. On the **old server**: note R version and R-packages versions
 2. On the **new server**: install Docker only (no R, no Shiny Server):

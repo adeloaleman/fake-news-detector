@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install CRAN packages (un-pinned; modern R should resolve cleanly)
 RUN R -e "options(repos='https://cloud.r-project.org/'); install.packages('remotes')" && \
-    R -e "options(repos='https://cloud.r-project.org/'); install.packages(c('shiny','readtext','readxl','readr','readODS','pdftools','streamR','tm','SnowballC','imager','xgboost','mlapi','text2vec','randomForest','tree','prodlim','ipred','caTools','glmnet','e1071','tau'))"
+    R -e "options(repos='https://cloud.r-project.org/'); install.packages(c('shiny','devtools','readtext','readxl','readr','readODS','pdftools','streamR','tm','SnowballC','imager','xgboost','mlapi','text2vec','randomForest','tree','prodlim','ipred','caTools','glmnet','e1071','tau'))"
 
 # --- App stage ---
 FROM deps
