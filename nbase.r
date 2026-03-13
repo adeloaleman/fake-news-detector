@@ -4,7 +4,6 @@ data<-readtext(x)
 library(xgboost)
 library(tm)
 library(text2vec)
-library(devtools)
 library(readr)
 library(tools)       # No tiene que ser isntalado. It's a base pacakge
 library(SnowballC)

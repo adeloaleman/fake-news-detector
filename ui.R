@@ -13,7 +13,6 @@
 
 library(shiny)
 library(readtext)
-library(devtools)
 library(xgboost)
 library(text2vec)
 library(tm)
