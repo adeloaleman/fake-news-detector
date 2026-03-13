@@ -172,6 +172,7 @@ COPY . /app
 RUN R -e "remotes::install_version('lava', version = '1.6.6', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('prodlim', version = '1.6.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('ipred', version = '0.9-9', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readr', version = '1.3.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R CMD INSTALL /app/R-packages.n0b4/RTextTools-modificado/RTextTools && \
     R CMD INSTALL /app/R-packages.n0b4/FakeNewsDetector && \
     rm -rf /app/R-packages.n0b4
