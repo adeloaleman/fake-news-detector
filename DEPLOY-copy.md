@@ -18,6 +18,28 @@ Hit the app at `http://YOUR_SERVER_IP:3838` in a browser.
 curl -s -o /dev/null -w "%{http_code}" http://localhost:3838
   ```
 
+#### Checking that required R packages are installed in the container
+
+1. **List all installed R packages** (names and versions):
+   ```bash
+   docker exec fake-news-detector-container R -e "print(installed.packages()[, c('Package', 'Version')])"
+   ```
+   To only see package names:
+   ```bash
+   docker exec fake-news-detector-container R -e "rownames(installed.packages())"
+   ```
+
+2. **Run the check script** (tries to load each package the app uses and reports OK/FAIL):
+   ```bash
+   docker exec fake-news-detector-container Rscript /app/scripts/check_r_packages.R
+   ```
+   Exit code 0 means all required packages load; exit code 1 means at least one failed.
+
+3. **Quick one-liner** to try loading the main app packages and see errors:
+   ```bash
+   docker exec fake-news-detector-container R -e "for (p in c('readtext','xgboost','tm','text2vec','readr','SnowballC','RTextTools','FakeNewsDetector','shiny','NLP','imager')) { ok <- require(p, character.only=TRUE, quietly=TRUE); cat(p, if(ok) 'OK' else 'FAIL', '\n') }"
+   ```
+
 
 
 

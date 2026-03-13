@@ -132,7 +132,8 @@ RUN R -e "remotes::install_version('pillar',       version = '1.4.3',      repos
     R -e "remotes::install_version('readODS',      version = '1.6.7',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('pdftools',     version = '2.3',        repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('streamR',      version = '0.4.5',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
-    R -e "remotes::install_version('readxl',       version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never'); remotes::install_version('readtext', version = '0.75', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readxl',       version = '1.3.1',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readtext',     version = '0.75',       repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('httpuv',       version = '1.5.2',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('htmltools',    version = '0.4.0',      repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('shiny',        version = '1.4.0',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
@@ -144,12 +145,14 @@ RUN R -e "remotes::install_version('pillar',       version = '1.4.3',      repos
     R -e "remotes::install_version('imager',       version = '0.42.1',     repos = 'https://cloud.r-project.org/', upgrade = 'never')"
 
 ## Step 3: RTextTools dependencies (R 3.4–compatible versions; versions aligned with original server)
+## Install lava 1.6.6 FIRST so prodlim/ipred do not pull lava 1.8.x (which needs progressr, not on R 3.4.4)
 RUN R -e "remotes::install_version('SparseM',      version = '1.78',       repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('SQUAREM',      version = '2020.1',     repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('lava',         version = '1.6.6',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('randomForest', version = '4.6-14',     repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('tree',         version = '1.0-39',     repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('prodlim',      version = '2019.11.13', repos = 'https://cloud.r-project.org/')" && \
-    R -e "remotes::install_version('ipred',        version = '0.9-9',      repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('prodlim',      version = '2019.11.13', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('ipred',        version = '0.9-9',      repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('caTools',      version = '1.17.1.4',   repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('maxent',       version = '1.3.3.1',    repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('glmnet',       version = '2.0-18',     repos = 'https://cloud.r-project.org/')" && \
@@ -167,13 +170,16 @@ COPY . /app
 
 # Install RTextTools and FakeNewsDetector from local R-packages.n0b4
 # (Project must contain R-packages.n0b4/RTextTools-modificado/RTextTools and R-packages.n0b4/FakeNewsDetector)
-# Install prodlim then ipred here so RTextTools finds them (avoids relying on deps cache).
 # Install lava 1.6.6 first so prodlim does not pull lava 1.8.x (which needs progressr, not on R 3.4).
+# Install progress, readxl, readODS before readtext (readtext requires them; they may have failed in deps).
 RUN R -e "remotes::install_version('lava', version = '1.6.6', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('prodlim', version = '1.6.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('ipred', version = '0.9-9', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('hms', version = '0.5.3', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('readr', version = '1.3.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('progress', version = '1.2.2', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readODS', version = '1.6.7', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
+    R -e "remotes::install_version('readxl', version = '1.3.1', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R -e "remotes::install_version('readtext', version = '0.75', repos = 'https://cloud.r-project.org/', upgrade = 'never')" && \
     R CMD INSTALL /app/R-packages.n0b4/RTextTools-modificado/RTextTools && \
     R CMD INSTALL /app/R-packages.n0b4/FakeNewsDetector && \
