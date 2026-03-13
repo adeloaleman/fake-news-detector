@@ -2,46 +2,40 @@
 
 To avoid installing an older R (and all its packages) directly on the new Ubuntu 24 server, run the app in a **Docker container** that uses the same R version as your old server. Only Docker is installed on the host; R and the app live inside the container.
 
-
 ```bash
 cd ~/fake-news-detector
+
 docker build -t fake-news-detector-image .
-docker build -q -t fake-news-detector-image -f Dockerfile . # This is the same build but not all information is printed during building, only errors: -q: quiet 
-docker build -t fake-news-detector-image . > build.log 2>&1
+
+docker build -q -t fake-news-detector-image -f Dockerfile .   # This is the same build but not all information is printed during building, only errors: -q: quiet 
+
+docker build -t fake-news-detector-image . > build.log 2>&1   # Or if we want the building details to be save to a .log file istead of being printed on the terminal
 
 docker run -d -p 3838:3838 --name fake-news-detector-container fake-news-detector-image
 ```
 
-
 Hit the app at `http://YOUR_SERVER_IP:3838` in a browser.
+
 ```bash
 curl -s -o /dev/null -w "%{http_code}" http://localhost:3838
-  ```
+```
 
 #### Checking that required R packages are installed in the container
 
 1. **List all installed R packages** (names and versions):
-   ```bash
+  ```bash
    docker exec fake-news-detector-container R -e "print(installed.packages()[, c('Package', 'Version')])"
-   ```
+  ```
    To only see package names:
-   ```bash
-   docker exec fake-news-detector-container R -e "rownames(installed.packages())"
-   ```
-
 2. **Run the check script** (tries to load each package the app uses and reports OK/FAIL):
-   ```bash
+  ```bash
    docker exec fake-news-detector-container Rscript /app/scripts/check_r_packages.R
-   ```
+  ```
    Exit code 0 means all required packages load; exit code 1 means at least one failed.
-
 3. **Quick one-liner** to try loading the main app packages and see errors:
-   ```bash
+  ```bash
    docker exec fake-news-detector-container R -e "for (p in c('readtext','xgboost','tm','text2vec','readr','SnowballC','RTextTools','FakeNewsDetector','shiny','NLP','imager')) { ok <- require(p, character.only=TRUE, quietly=TRUE); cat(p, if(ok) 'OK' else 'FAIL', '\n') }"
-   ```
-
-
-
+  ```
 
 #### Useful Docker commands
 
@@ -79,9 +73,6 @@ docker rmi $(docker images -q)
 # One-shot prune (images, containers, volumes, networks). If you truly want to wipe almost everything Docker created on your machine:
 docker system prune -a --volumes
 ```
-
-  
-
 
 ### Nginx conf.
 
