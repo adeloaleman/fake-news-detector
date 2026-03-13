@@ -6,7 +6,9 @@ To avoid installing an older R (and all its packages) directly on the new Ubuntu
 ```bash
 cd ~/fake-news-detector
 docker build -t fake-news-detector-image .
-docker build --progress=quiet -t your-image-name -f Dockerfile . # This is the same build but not all information is printed during building, only errors
+docker build -q -t fake-news-detector-image -f Dockerfile . # This is the same build but not all information is printed during building, only errors: -q: quiet 
+docker build -t fake-news-detector-image . > build.log 2>&1
+
 docker run -d -p 3838:3838 --name fake-news-detector-container fake-news-detector-image
 ```
 

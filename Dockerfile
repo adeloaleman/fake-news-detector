@@ -145,6 +145,7 @@ RUN R -e "remotes::install_version('pillar',       version = '1.4.3',      repos
 
 ## Step 3: RTextTools dependencies (R 3.4–compatible versions; versions aligned with original server)
 RUN R -e "remotes::install_version('SparseM',      version = '1.78',       repos = 'https://cloud.r-project.org/')" && \
+    R -e "remotes::install_version('SQUAREM',      version = '2020.1',     repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('randomForest', version = '4.6-14',     repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('tree',         version = '1.0-39',     repos = 'https://cloud.r-project.org/')" && \
     R -e "remotes::install_version('prodlim',      version = '2019.11.13', repos = 'https://cloud.r-project.org/')" && \
