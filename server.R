@@ -97,13 +97,13 @@ shinyServer(function(input, output,session) {
       
       texto<-paste('
                    <div style="padding: 5px; float: left; width: 100%; margin-top: -10px; margin-top: 30px">
-                   <div style="background-color: white; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
-                   <div style="background-color: white; color: black; height: 40px; font-weight: bold">
+                   <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
+                   <div style="background-color: #182230; color: white; height: 40px; font-weight: bold">
                    <p style="padding: 0px; margin-left: 0px; font-size: 20px;">
                    Input Text
                    </p>
                    </div>
-                   <table style="border-collapse: separate; border-spacing: 20px 2em;">
+                   <table style="border-collapse: separate; border-spacing: 20px 2em; color: white;">
                    ',text,'
                    <br/>
                    <br/>
@@ -116,24 +116,24 @@ shinyServer(function(input, output,session) {
       
       warning<-paste('
                      <div style="padding: 5px; float: left; width: 100%; margin-top: -10px; margin-top: 30px">
-                     <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                     <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                      <div style="background-color: rgb(189,183,107); color: white; height: 40px; font-weight: bold">
                      <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                      Important
                      
                      <meta name="viewport" content="width=device-width, initial-scale=1">
                      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                     <i class="fa fa-area-chart" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                     <i class="fa fa-area-chart" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                      
                      </p>
                      </div>
-                     <table style="padding: 5px; border-collapse: separate; border-spacing: 0.5px 1.5em; margin-left: 10px">
+                     <table style="padding: 5px; border-collapse: separate; border-spacing: 0.5px 1.5em; margin-left: 10px; color: white;">
                      <tr style="margin-top: 100px;">
                      <td style="margin-top: 100px;">
 
                      <meta name="viewport" content="width=device-width, initial-scale=1">
                      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                     <i class="fa fa-check" style="color: black; font-size: 18px; float: right; margin-right: 7px; margin-top: 7px;" height="1em" width="1em"></i>
+                     <i class="fa fa-check" style="color: white; font-size: 18px; float: right; margin-right: 7px; margin-top: 7px;" height="1em" width="1em"></i>
 
                      
                      </td>
@@ -144,7 +144,7 @@ shinyServer(function(input, output,session) {
                      
                      <meta name="viewport" content="width=device-width, initial-scale=1">
                      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                     <i class="fa fa-check" style="color: black; font-size: 18px; float: right; margin-right: 7px; margin-top: 7px;" height="1em" width="1em"></i>
+                     <i class="fa fa-check" style="color: white; font-size: 18px; float: right; margin-right: 7px; margin-top: 7px;" height="1em" width="1em"></i>
 
                      </td>
                      <td>The best accuracy was obtained with the Gradient Boosting (XGBoost) algorithm. We got 78% accuracy. Therefore, keep in mind that the most reliable result is the one returned by that algorithm.</td>
@@ -154,7 +154,7 @@ shinyServer(function(input, output,session) {
 
                      <meta name="viewport" content="width=device-width, initial-scale=1">
                      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                     <i class="fa fa-check" style="color: black; font-size: 18px; float: right; margin-right: 7px; margin-top: 7px;" height="1em" width="1em"></i>
+                     <i class="fa fa-check" style="color: white; font-size: 18px; float: right; margin-right: 7px; margin-top: 7px;" height="1em" width="1em"></i>
 
                      </td>
                      <td>It is very important to notice that a complete News Article must be entered so the models are able to work correctly. You cannot input only a sentence and expect our models to validate if that sentence is true or fake.</td>
@@ -164,7 +164,7 @@ shinyServer(function(input, output,session) {
 
                      <meta name="viewport" content="width=device-width, initial-scale=1">
                      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                     <i class="fa fa-check" style="color: black; font-size: 18px; float: right; margin-right: 7px; margin-top: -2px;" height="1em" width="1em"></i>
+                     <i class="fa fa-check" style="color: white; font-size: 18px; float: right; margin-right: 7px; margin-top: -2px;" height="1em" width="1em"></i>
 
                      </td>
                      <td>Also notice that the definition of Fake News used in this project is: <p style="color:blue">Deliberately distorted information that secretly leaked into the communication process in order to deceive and manipulate (Vladmir Bitman). Therefore, our Machine Learning Models are only able to detect this kind of Fake News.</p></td>
@@ -174,7 +174,7 @@ shinyServer(function(input, output,session) {
 
                      <meta name="viewport" content="width=device-width, initial-scale=1">
                      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                     <i class="fa fa-check" style="color: black; font-size: 18px; float: right; margin-right: 7px; margin-top: -2px;" height="1em" width="1em"></i>
+                     <i class="fa fa-check" style="color: white; font-size: 18px; float: right; margin-right: 7px; margin-top: -2px;" height="1em" width="1em"></i>
 
                      </td>
                      <td>You can test the application using some News Articles from a very unreliable source, such as: <a href="https://dailyworldupdate.us">https://dailyworldupdate.us</a>
@@ -185,7 +185,7 @@ shinyServer(function(input, output,session) {
 
                      <meta name="viewport" content="width=device-width, initial-scale=1">
                      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                     <i class="fa fa-check" style="color: black; font-size: 18px; float: right; margin-right: 7px; margin-top: 7px;" height="1em" width="1em"></i>
+                     <i class="fa fa-check" style="color: white; font-size: 18px; float: right; margin-right: 7px; margin-top: 7px;" height="1em" width="1em"></i>
 
                      </td>
                      <td>Visit our <a href="http://perso.sinfronteras.ws/index.php?title=Supervised_Machine_Learning_for_Fake_News_Detection">Website</a> to know more about this project.</td>
@@ -274,13 +274,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -355,13 +355,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -422,13 +422,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -488,13 +488,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -578,13 +578,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -673,13 +673,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -764,13 +764,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -895,13 +895,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -976,13 +976,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -1044,13 +1044,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -1109,13 +1109,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -1201,13 +1201,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -1295,13 +1295,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
@@ -1387,13 +1387,13 @@ shinyServer(function(input, output,session) {
           
           resultado<-paste('
                            <div style="padding: 5px; float: left; width: 100%; margin-top: -10px;">
-                           <div style="background-color: rgb(223,224,230); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: black; font-weight: normal; margin-top: 5px;">
+                           <div style="background-color: #182230; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; color: white; font-weight: normal; margin-top: 5px;">
                            <div style="background-color: rgb(29, 161, 242); color: white; height: 40px; font-weight: bold">
                            <p style="padding: 5px; margin-left: 17px; font-size: 20px;">
                            Results
                            <meta name="viewport" content="width=device-width, initial-scale=1">
                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                           <i class="fa fa-gears" style="color: black; font-size: 25px; float: right; margin-right: 7px;"></i>
+                           <i class="fa fa-gears" style="color: white; font-size: 25px; float: right; margin-right: 7px;"></i>
                            </p>
                            </div>
                            <table style="padding: 5px; border-collapse: separate; border-spacing: 20px 2em;">
