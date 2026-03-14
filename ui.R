@@ -66,7 +66,7 @@ shinyUI(
                                     style='padding:4px 26px; color: black ; font-weight: bold;
                                             border-color: #0000FF; font-size:110%; background-color: #DCDCDC')
                     ),
-                    div(style="display:inline-block"," (It takes a bit) "),
+                    div(style="display:inline-block"," (This may take a moment) "),
 
                     # Horizontal line ----
                     tags$hr()

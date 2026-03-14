@@ -188,7 +188,7 @@ shinyServer(function(input, output,session) {
                      <i class="fa fa-check" style="color: black; font-size: 18px; float: right; margin-right: 7px; margin-top: 7px;" height="1em" width="1em"></i>
 
                      </td>
-                     <td>Visit our <a href="https://wiki.sinfrontera.net/view/Supervised_Machine_Learning_for_Fake_News_Detection">Machine_Learning_for_Fake_News_Detection</a> to know more about this project.</td>
+                     <td>Visit <a href="https://wiki.sinfrontera.net/view/Supervised_Machine_Learning_for_Fake_News_Detection">Machine_Learning_for_Fake_News_Detection</a> to know more about this project.</td>
                      </tr>
                      </table>
                      </div>
