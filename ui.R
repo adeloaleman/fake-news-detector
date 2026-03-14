@@ -26,22 +26,13 @@ library(FakeNewsDetector)
 # Define UI for application that draws a histogram
 shinyUI(
     fluidPage(
-        tags$head(tags$style(HTML("
-            body, .container-fluid { background-color: #1B2026; }
-            .well { background-color: #1B2026; border: none; }
-            .news-article-frame { background-color: #1B2026; padding: 10px; border-radius: 4px; }
-            .news-article-frame label { color: #88A3E8; }
-            #text { background-color: #182230; color: white; border-color: #182230; }
-            .checkbox-frame { background-color: #182230; padding: 10px; border-radius: 4px; }
-            label[for='xgboost'], label[for='svm'] { color: #88A3E8; }
-        "))),
         div(
             style=" max-width: 1700px; margin: 0 auto 25px ",
             
             # App title ----
             titlePanel(windowTitle = "Fake News Detector", # Title shown in the tap of the web browser
                        p(style="font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;
-                                font-size: 30px; color: #5FF2F5; font-weight: bold; margin-left: 7px;
+                                font-size: 30px; color: #2F4F4F; font-weight: bold; margin-left: 7px;
                                 margin-bottom: 25px; margin-top: 30px;",
                          "Fake News Detector")), # Page title
 
@@ -53,28 +44,29 @@ shinyUI(
                     width=6,
 
                     #text input
-                    div(class = "news-article-frame",
-                        textAreaInput(inputId = "text", label = "News article text", height = 420)
-                    ),
+                    textAreaInput(inputId = "text", label = "News article text", height = 420),
 
 
                     # Horizontal line ----
                     tags$hr(),
 
-                    # Checkbox + Submit frame (#182230)
-                    div(class = "checkbox-frame",
-                        #checkbox input
-                        checkboxInput("xgboost","Gradient Boosting (XGBoost)"),
-                        checkboxInput("svm","Support Vector Machine"),
-                        # checkboxInput("nbase","Naive Bayes"),
-                        div(
-                            style="display:inline-block",
-                            actionButton("submit","Submit",
-                                        style='padding:4px 26px; color: black ; font-weight: bold;
-                                                border-color: #0000FF; font-size:110%; background-color: #DCDCDC')
-                        ),
-                        div(style="display:inline-block; color: #88A3E8;"," (It takes a bit) ")
+                    #showing Note 
+                    p(""),
+
+                    #checkbox input
+                    checkboxInput("xgboost","Gradient Boosting (XGBoost)"),
+                    checkboxInput("svm","Support Vector Machine"),
+                    # checkboxInput("nbase","Naive Bayes"),
+
+                    #submit button with name submit
+                    # actionButton("submit","Submit"),div("[ It takes a bit ]"),
+                    div(
+                        style="display:inline-block",
+                        actionButton("submit","Submit",
+                                    style='padding:4px 26px; color: black ; font-weight: bold;
+                                            border-color: #0000FF; font-size:110%; background-color: #DCDCDC')
                     ),
+                    div(style="display:inline-block"," (It takes a bit) "),
 
                     # Horizontal line ----
                     tags$hr()
