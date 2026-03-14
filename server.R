@@ -177,7 +177,7 @@ shinyServer(function(input, output,session) {
                      <i class="fa fa-check" style="color: black; font-size: 18px; float: right; margin-right: 7px; margin-top: -2px;" height="1em" width="1em"></i>
 
                      </td>
-                     <td>You can test the application using some News Articles from a very unreliable source, such as: <a href="https://dailyworldupdate.us">https://dailyworldupdate.us</a>
+                     <td>You can test the app using some news articles from a very unreliable source, such as: <a href="https://thepeoplesvoice.tv">https://thepeoplesvoice.tv</a>
                      <p> Or you can try some reliable News Articles from: <a href="http://m.cnn.com/en">http://m.cnn.com/en</a></p></td>
                      </tr>
                      <tr style="margin-top: 100px;">
@@ -188,7 +188,7 @@ shinyServer(function(input, output,session) {
                      <i class="fa fa-check" style="color: black; font-size: 18px; float: right; margin-right: 7px; margin-top: 7px;" height="1em" width="1em"></i>
 
                      </td>
-                     <td>Visit our <a href="http://perso.sinfronteras.ws/index.php?title=Supervised_Machine_Learning_for_Fake_News_Detection">Website</a> to know more about this project.</td>
+                     <td>Visit our <a href="https://wiki.sinfrontera.net/view/Supervised_Machine_Learning_for_Fake_News_Detection">Machine_Learning_for_Fake_News_Detection</a> to know more about this project.</td>
                      </tr>
                      </table>
                      </div>
@@ -289,7 +289,7 @@ shinyServer(function(input, output,session) {
                            XGBoost:
                            </td>
                            <td style="color: ',color_font_xgb,'"> ',color_xgb,' </td>
-                           <td style="font-weight: bold"> (best result) </td>
+                           <td style="font-weight: bold">  </td>
                            </tr>
                            <tr style="margin-top: 100px; font-size: 15px">
                            <td style="margin-top: 100px; font-weight: bold">
@@ -593,7 +593,7 @@ shinyServer(function(input, output,session) {
                            XGBoost:
                            </td>
                            <td style="color: ',color_font_xgb,'"> ',color_xgb,' </td>
-                           <td style="font-weight: bold"> (best result) </td>
+                           <td style="font-weight: bold">  </td>
                            </tr>
                            <tr style="margin-top: 100px; font-size: 15px">
                            <td style="margin-top: 100px; font-weight: bold">
@@ -688,7 +688,7 @@ shinyServer(function(input, output,session) {
                            XGBoost:
                            </td>
                            <td style="color: ',color_font_xgb,'"> ',color_xgb,' </td>
-                           <td style="font-weight: bold"> (best result) </td>
+                           <td style="font-weight: bold">  </td>
                            </tr>
                            <tr style="margin-top: 100px; font-size: 15px">
                            <td style="margin-top: 100px; font-weight: bold">
@@ -910,7 +910,7 @@ shinyServer(function(input, output,session) {
                            XGBoost:
                            </td>
                            <td style="color: ',color_font_xgb,'"> ',color_xgb,' </td>
-                           <td style="font-weight: bold"> (best result) </td>
+                           <td style="font-weight: bold">  </td>
                            </tr>
                            <tr style="margin-top: 100px; font-size: 15px">
                            <td style="margin-top: 100px; font-weight: bold">
@@ -991,7 +991,7 @@ shinyServer(function(input, output,session) {
                            XGBoost:
                            </td>
                            <td style="color: ',color_font_xgb,'"> ',color_xgb,' </td>
-                           <td style="font-weight: bold"> (best result) </td>
+                           <td style="font-weight: bold">  </td>
                            </tr>
                            </table>
                            </div>
@@ -1216,7 +1216,7 @@ shinyServer(function(input, output,session) {
                            XGBoost:
                            </td>
                            <td style="color: ',color_font_xgb,'"> ',color_xgb,' </td>
-                           <td style="font-weight: bold"> (best result) </td>
+                           <td style="font-weight: bold">  </td>
                            </tr>
                            <tr style="margin-top: 100px; font-size: 15px">
                            <td style="margin-top: 100px; font-weight: bold">
@@ -1310,7 +1310,7 @@ shinyServer(function(input, output,session) {
                            XGBoost:
                            </td>
                            <td style="color: ',color_font_xgb,'"> ',color_xgb,' </td>
-                           <td style="font-weight: bold"> (best result) </td>
+                           <td style="font-weight: bold">  </td>
                            </tr>
                            <tr style="margin-top: 100px; font-size: 15px">
                            <td style="margin-top: 100px; font-weight: bold">
