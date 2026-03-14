@@ -7,28 +7,15 @@ Try the Fake News Detector Web App:
 https://fake-news-detector.sinfrontera.net
 
 
-## In this project we created a Supervised Machine Learning Model for Fake News Detection based on three algorithms
+## In this project, we created a Supervised Machine Learning Model for Fake News Detection based on three algorithms
 
 - Naive Bayes
 - Support Vector Machine
 - Gradient Boosting (XGBoost)
 
 
-## This repository
-
 Apart from the Web app, this repository also contains an **R library** that we created to package the Machine Learning models.
 The package contains three functions:
-
-- `modelNB()`
-- `modelSVM()`
-- `modelXGBoost()`
-
-These functions take a **news article as input** and, using the trained models, return an authenticity tag:
-
-- **fake (1)**
-- **reliable (0)**
-
-Function descriptions:
 
 - **`modelNB()`**  
   Based on the Naive Bayes model.
@@ -40,9 +27,15 @@ Function descriptions:
   Based on the Extreme Gradient Boosting model.
 
 
+These functions take a **news article as input** and, using the trained models, return an authenticity tag:
+
+- **fake (1)**
+- **reliable (0)**
+
+
 ## Web application
 
-**https://fake-news-detector.sinfrontera.net**
+https://fake-news-detector.sinfrontera.net
 
 This web application allows users to easily interact with the Machine Learning models.
 Users can determine whether a news article is **fake** or **reliable** by entering its text into an input field.
@@ -54,9 +47,7 @@ The web application was built using **:contentReference[oaicite:1]{index=1}**, a
 
 ## Model accuracy
 
-The Machine Learning model created using the **Gradient Boosting algorithm** achieved an accuracy of:
-
-**78.86%**
+The Machine Learning model trained using the **Gradient Boosting** algorithm achieved an accuracy of **78.86%**.
 
 
 ## Definition of Fake News used in this project
