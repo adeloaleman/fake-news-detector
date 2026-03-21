@@ -58,3 +58,4 @@ In this project, fake news is defined as:
 > — Vladimir Bitman
 
 Therefore, the Machine Learning models in this project are designed to detect **fake news articles that were deliberately created to deceive and manipulate**.
+
